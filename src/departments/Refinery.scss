@@ -1,0 +1,25 @@
+.elements {
+    width: 100%;
+    max-width: 400px;
+    tr {
+        th {
+            padding: 0.5rem 0;
+            text-align: left;
+            border-bottom: 2px solid #000;
+        }
+        td {
+            padding: 0.25rem 0;
+            border-bottom: 1px solid #c2c2c2;
+        }
+        &:last-of-type {
+            td {
+                border-bottom: none;
+            }
+        }
+    }
+}
+.switch {
+    select {
+        padding: 0.25rem 0.5rem;
+    }
+}

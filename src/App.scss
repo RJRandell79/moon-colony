@@ -1,0 +1,55 @@
+$max-width: calc(100% - 4rem);
+
+.App {
+    .App-header {
+        .header-toolbar {
+            ul {
+                list-style-type: none;
+                display: flex;
+                width: 100%;
+                max-width: $max-width;
+                display: flex;
+                margin: 1rem auto;
+                padding: 0;
+                border: 1px solid #999;
+                align-items: center;
+                justify-content: space-evenly;
+                li {
+                    width: 100%;
+                    border-right: 1px solid #999;
+                    &:last-of-type {
+                        border-right: none;
+                    }
+                    p, a, button {
+                        margin: 0;
+                        color: #000;
+                        text-align: center;
+                    }
+                    button {
+                        width: 100%;
+                        padding: 0.5rem 1rem;
+                        background: none;
+                        font-size: inherit;
+                        font-family: inherit;
+                        appearance: none;
+                        border: none;
+                    }
+                    p {
+                        text-transform: uppercase;
+                    }
+                    a {
+                        display: block;
+                        width: 100%;
+                        padding: 0.5rem 1rem;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}
+.container {
+    width: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
+}
