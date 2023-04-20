@@ -14,6 +14,17 @@ const App = () => {
   const [dateTime, setDateTime] = useState(
     new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0))
   );
+  const [currentPowerOutput, setCurrentPowerOutput] = useState(10);
+  const [powerPlants, setPowerPlants] = useState(
+    [
+      { id: 1, powerplant: 'Batteries', output: 10, total: 1, installed: true },
+      { id: 2, powerplant: 'Mk I', output: 100, total: 1, installed: false },
+      { id: 3, powerplant: 'Mk II', output: 200, total: 0, installed: false },
+      { id: 4, powerplant: 'Mk III', output: 400, total: 0, installed: false },
+      { id: 5, powerplant: 'Mk IV', output: 800, total: 0, installed: false },
+      { id: 6, powerplant: 'Mk V', output: 1600, total: 0, installed: false }
+    ]
+  );
   const [elements, setElements] = useState(
     [
       { element: 'Aluminum', amount: 0, rate: 13 },
@@ -28,6 +39,17 @@ const App = () => {
     ]
   );
   const [refineryActive, setRefineryActive] = useState('0');
+
+  const installPower = (selected_id) => {
+    const updatedPower = powerPlants.map((powerplant) => {
+      if (selected_id === powerplant.id) {
+        setCurrentPowerOutput(powerplant.output);
+        return { ...powerplant, installed: true }
+      }
+      return { ...powerplant, installed: false }
+    });
+    setPowerPlants(updatedPower);
+  }
   
   const toggleRefining = (value) => {
     setRefineryActive(value);
@@ -93,7 +115,7 @@ const App = () => {
           </div>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="power" element={<Power />} />
+            <Route path="power" element={<Power powerplants={powerPlants} currentPowerOutput={currentPowerOutput} installPower={installPower} />} />
             <Route path="refinery" element={<Refinery elements={elements} refineryActive={refineryActive} toggleRefining={toggleRefining} />} />
           </Routes>
         </Router>
