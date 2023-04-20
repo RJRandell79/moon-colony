@@ -14,6 +14,18 @@ class App extends Component {
     super(props);
     this.state = {
       date: new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0)),
+      elements: [
+          { element: 'Aluminum', amount: 0, rate: 0 },
+          { element: 'Calcium', amount: 0, rate: 0 },
+          { element: 'Hydrogen', amount: 0, rate: 3 },
+          { element: 'Iron', amount: 0, rate: 1 },
+          { element: 'Magnesium', amount: 0, rate: 0 },
+          { element: 'Oxygen', amount: 0, rate: 0 },
+          { element: 'Potassium', amount: 0, rate: 0 },
+          { element: 'Silicon', amount: 0, rate: 0 },
+          { element: 'Sodium', amount: 0, rate: 0 },
+          { element: 'Titanium', amount: 0, rate: 0 }
+      ],
       refineryActive: '0'
     }
   }
@@ -25,12 +37,23 @@ class App extends Component {
     console.log(this.state.refineryActive);
   }
 
+  mineElements = () => {
+    if(this.state.refineryActive !== '0') {
+      const updatedElements = this.state.elements.map((element) => {
+          return { ...element, amount: element.amount + element.rate }
+      });
+      this.setState({ elements: updatedElements });
+      console.log('mining');
+    }
+  }
+
   advanceDay = () => {
     const newDate = new Date(this.state.date);
     newDate.setDate(newDate.getDate() + 1);
     this.setState(prevState => ({
       date: newDate
     }));
+    this.mineElements();
     console.log('day+');
   }
 
@@ -52,11 +75,13 @@ class App extends Component {
     //console.log('second+');
   }
 
-  render() {
-    setTimeout(() => {
-      this.advanceSecond();
+  componentDidMount() {
+    setInterval(() => {
+      this.advanceSecond()
     }, 1000);
+  }
 
+  render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -83,7 +108,7 @@ class App extends Component {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="power" element={<Power />} />
-              <Route path="refinery" element={<Refinery toggleRefinery={this.refineryActive.bind(this)} refineryActive={this.state.refineryActive} />} />
+              <Route path="refinery" element={<Refinery toggleRefinery={this.refineryActive.bind(this)} refineryActive={this.state.refineryActive} elements={this.state.elements} />} />
             </Routes>
           </Router>
         </header>
