@@ -6,6 +6,7 @@ import './App.scss';
 import Home from './Home';
 import Power from './departments/Power';
 import Refinery from './departments/Refinery';
+import Support from './departments/Support';
 
 //source ~/.nvm/nvm.sh
 
@@ -13,6 +14,11 @@ const App = () => {
   
   const [dateTime, setDateTime] = useState(
     new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0))
+  );
+  const [currentPopulation, setCurrentPopulation] = useState(
+    [
+      { id: 1, population: 20, rate: 0.01 }
+    ]
   );
   const [currentPowerOutput, setCurrentPowerOutput] = useState(10);
   const [currentPowerDemand, setCurrentPowerDemand] = useState(0);
@@ -40,6 +46,13 @@ const App = () => {
     ]
   );
   const [refineryActive, setRefineryActive] = useState('0');
+
+  const increasePopulation = () => {
+    const updatedPopulation = currentPopulation.map((population) => {
+      return { ...population, population: population.population + population.rate }
+    });
+    setCurrentPopulation(updatedPopulation);
+  }
 
   const installPower = (selected_id) => {
     const updatedPower = powerPlants.map((powerplant) => {
@@ -80,6 +93,7 @@ const App = () => {
     newDate.setDate(newDate.getDate() + 1);
     setDateTime(newDate);
     mineElements();
+    increasePopulation();
     console.log('day+');
   }
 
@@ -113,6 +127,9 @@ const App = () => {
                 <Link to="/refinery">Refinery</Link>
               </li>
               <li>
+                <Link to="/support">Support</Link>
+              </li>
+              <li>
                 <button type="button" onClick={() => advanceDay()}>Advance day</button>
               </li>
               <li>
@@ -127,6 +144,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="power" element={<Power powerplants={powerPlants} currentPowerOutput={currentPowerOutput} currentPowerDemand={currentPowerDemand} installPower={installPower} />} />
             <Route path="refinery" element={<Refinery elements={elements} refineryActive={refineryActive} toggleRefining={toggleRefining} />} />
+            <Route path="support" element={<Support currentPopulation={currentPopulation} />} />
           </Routes>
         </Router>
       </header>
