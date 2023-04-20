@@ -15,6 +15,7 @@ const App = () => {
     new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0))
   );
   const [currentPowerOutput, setCurrentPowerOutput] = useState(10);
+  const [currentPowerDemand, setCurrentPowerDemand] = useState(0);
   const [powerPlants, setPowerPlants] = useState(
     [
       { id: 1, powerplant: 'Batteries', output: 10, total: 1, installed: true },
@@ -44,6 +45,10 @@ const App = () => {
     const updatedPower = powerPlants.map((powerplant) => {
       if (selected_id === powerplant.id) {
         setCurrentPowerOutput(powerplant.output);
+        if(powerplant.output < 35) {
+          setCurrentPowerDemand(0);
+          setRefineryActive('0');
+        }
         return { ...powerplant, installed: true }
       }
       return { ...powerplant, installed: false }
@@ -52,11 +57,16 @@ const App = () => {
   }
   
   const toggleRefining = (value) => {
-    setRefineryActive(value);
+    if(currentPowerOutput >= 35) {
+      setCurrentPowerDemand(35);
+      setRefineryActive(value);
+    } else {
+      alert('Not enough power!');
+    }
   }
 
   const mineElements = () => {
-    if(refineryActive !== '0') {
+    if(refineryActive !== '0' && currentPowerOutput >= 35) {
       const updatedElements = elements.map((element) => {
           return { ...element, amount: element.amount + element.rate }
       });
@@ -115,7 +125,7 @@ const App = () => {
           </div>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="power" element={<Power powerplants={powerPlants} currentPowerOutput={currentPowerOutput} installPower={installPower} />} />
+            <Route path="power" element={<Power powerplants={powerPlants} currentPowerOutput={currentPowerOutput} currentPowerDemand={currentPowerDemand} installPower={installPower} />} />
             <Route path="refinery" element={<Refinery elements={elements} refineryActive={refineryActive} toggleRefining={toggleRefining} />} />
           </Routes>
         </Router>

@@ -1,15 +1,17 @@
 import * as React from 'react';
 import './Power.scss';
 
-const Power = ({installPower, powerplants, currentPowerOutput}) => {
+const Power = ({installPower, powerplants, currentPowerOutput, currentPowerDemand}) => {
+
+    let netPower = (currentPowerOutput - currentPowerDemand);
 
     return (
         <section className="container">
             <article>
                 <h2>Power</h2>
                 <p>Current total power output: <span className="supply">{currentPowerOutput}kW</span></p>
-                <p>Current demand: <span className="demand">kW</span></p>
-                <p>Net: <span>kW</span></p>
+                <p>Current demand: <span className="demand">{currentPowerDemand}kW</span></p>
+                <p>Net: <span>{netPower}kW</span></p>
                 <table className="power" cellPadding={0} cellSpacing={0} border={0}>
                     <thead>
                         <tr>
