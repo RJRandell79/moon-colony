@@ -15,9 +15,7 @@ const Support = ({currentPopulation}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentPopulation.map(({id, population, rate}) => {
-                            return <tr key={id}><td>{Math.trunc(population)}</td><td>{rate}</td></tr>
-                        })}
+                        <tr><td>{Math.trunc(currentPopulation.population)}</td><td>{currentPopulation.rate}</td></tr>
                     </tbody>
                 </table>
             </article>

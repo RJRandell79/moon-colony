@@ -15,11 +15,7 @@ const App = () => {
   const [dateTime, setDateTime] = useState(
     new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0))
   );
-  const [currentPopulation, setCurrentPopulation] = useState(
-    [
-      { id: 1, population: 20, rate: 0.01 }
-    ]
-  );
+  let [currentPopulation, setCurrentPopulation] = useState({ population: 30, rate: 0.01 });
   const [currentPowerOutput, setCurrentPowerOutput] = useState(10);
   const [currentPowerDemand, setCurrentPowerDemand] = useState(0);
   const [powerPlants, setPowerPlants] = useState(
@@ -48,10 +44,8 @@ const App = () => {
   const [refineryActive, setRefineryActive] = useState('0');
 
   const increasePopulation = () => {
-    const updatedPopulation = currentPopulation.map((population) => {
-      return { ...population, population: population.population + population.rate }
-    });
-    setCurrentPopulation(updatedPopulation);
+    const newPopulation = (currentPopulation.population + currentPopulation.rate);
+    setCurrentPopulation({ ...currentPopulation, population: newPopulation, rate: currentPopulation.rate });
   }
 
   const installPower = (selected_id) => {
@@ -70,11 +64,13 @@ const App = () => {
   }
   
   const toggleRefining = (value) => {
-    if(currentPowerOutput >= 35) {
+    if(currentPowerOutput < 35) {
+      alert('Not enough power!');
+    } else if(currentPopulation.population < 30) {
+      alert('Not enough people to work refinery');
+    } else {
       setCurrentPowerDemand(35);
       setRefineryActive(value);
-    } else {
-      alert('Not enough power!');
     }
   }
 
