@@ -46,31 +46,52 @@ const App = () => {
 
   const [researchProjects, setResearchProjects] = useState(
     [
-      { id: 'c0', category: 'Colonisation', projects: [
+      { cid: 'c0', category: 'Colonisation', projects: [
 
       ]},
-      { id: 't0', category: 'Transportation', projects: [ 
+      { cid: 't0', category: 'Transportation', projects: [ 
         { id: 't1', projectname: 'Probe', researchtime: 7, buildtime: 3, completed: true, available: true, active: false, elements: [
           { element: 'Aluminum', amount: 1 },
           { element: 'Titanium', amount: 3 }
         ] },
         { id: 't2', projectname: 'Grazer', researchtime: 14, buildtime: 5, completed: false, available: true, active: false },
       ]},
-      { id: 'w0', category: 'Weapons', projects: [
+      { cid: 'w0', category: 'Weapons', projects: [
 
       ]},
-      { id: 'p0', category: 'Power', projects: [ 
+      { cid: 'p0', category: 'Power', projects: [ 
         { id: 'p1', projectname: 'Mk I', researchtime: 7, buildtime: 7, completed: false, available: true, active: false },
         { id: 'p2', projectname: 'Mk II', researchtime: 14, buildtime: 14, completed: false, available: false, active: false },
         { id: 'p3', projectname: 'Mk III', researchtime: 21, buildtime: 21, completed: false, available: false, active: false },
         { id: 'p4', projectname: 'Mk IV', researchtime: 28, buildtime: 28, completed: false, available: false, active: false },
         { id: 'p5', projectname: 'Mk V', researchtime: 35, buildtime: 35, completed: false, available: false, active: false }
       ]},
-      { id: 's0', category: 'Supplemental', projects: [
+      { cid: 's0', category: 'Supplemental', projects: [
 
       ]}
     ]
   );
+
+  const selectProject = (category_id, selected_id) => {
+    const selectedProject = researchProjects.map((researchProject) => {
+      if (researchProject.cid === category_id) { 
+        return { 
+          ...researchProject, projects: researchProject.projects.map((project) => {
+            if (project.id === selected_id) {
+              return { ...project, active: true }
+            }
+            return { ...project, active: false }
+          })
+        }
+      }
+      return { 
+        ...researchProject, projects: researchProject.projects.map((project) => {
+          return { ...project, active: false }
+        })
+      }
+    });
+    setResearchProjects(selectedProject);
+  }
 
   const increasePopulation = () => {
     const newPopulation = (currentPopulation.population + currentPopulation.rate);
@@ -172,7 +193,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="power" element={<Power powerplants={powerPlants} currentPowerOutput={currentPowerOutput} currentPowerDemand={currentPowerDemand} installPower={installPower} />} />
             <Route path="refinery" element={<Refinery elements={elements} refineryActive={refineryActive} toggleRefining={toggleRefining} />} />
-            <Route path="research" element={<Research researchprojects={researchProjects} />} />
+            <Route path="research" element={<Research researchprojects={researchProjects} selectProject={selectProject} />} />
             <Route path="support" element={<Support currentPopulation={currentPopulation} />} />
           </Routes>
         </Router>

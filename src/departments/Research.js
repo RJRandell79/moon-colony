@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Research.scss';
 
-const Research = ({researchprojects}) => {
+const Research = ({selectProject, researchprojects}) => {
 
     const currentProject = () => {
         let project = 'No project currently being researched!';
@@ -45,19 +45,19 @@ const Research = ({researchprojects}) => {
             <article>
                 <h2>Research</h2>
                 <ul id="project-categories" className="project-categories">
-                    {researchprojects.map(({id, category}, index) => {
+                    {researchprojects.map(({cid, category}, index) => {
                         let active = isActive(index);
-                        return <li key={id} className={active}><button type="button" onClick={() => switchCategory(index)}>{category}</button></li>
+                        return <li key={cid} className={active}><button type="button" onClick={() => switchCategory(index)}>{category}</button></li>
                     })}
                 </ul>
 
                 <div id="projects-list" className="projects-list">
-                {researchprojects.map(({id, projects}, index) => {
+                {researchprojects.map(({cid, projects}, index) => {
                     let active = isActive(index);
-                    return <ul key={id} className={`${active}`}>{projects.map(({id, projectname, available}) => {
+                    return <ul key={index} className={`${active}`}>{projects.map(({id, projectname, available}) => {
                         let project = <li key={id}></li>;
                         if(available) {
-                            project = <li key={id}><button type="button">{projectname}</button></li>
+                            project = <li key={id}><button type="button" onClick={() => selectProject(cid, id)}>{projectname}</button></li>
                         }
                         return project;
                     })}</ul>
