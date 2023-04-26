@@ -3,6 +3,20 @@ import './Research.scss';
 
 const Research = ({researchprojects}) => {
 
+    const currentProject = () => {
+        let project = 'No project currently being researched!';
+
+        for (var i = 0; i < researchprojects.length; i++) {
+            for (var x = 0; x < researchprojects[i].projects.length; x++) {
+                if(researchprojects[i].projects[x].active) {
+                    project = 'Researching ' + researchprojects[i].projects[x].projectname;
+                    break;
+                }
+            }
+        }
+        return <p>{project}</p>
+    }
+
     const isActive = (idx) => {
         let isActive = '';
         if(idx === 0) {
@@ -51,7 +65,7 @@ const Research = ({researchprojects}) => {
                 </div>
 
                 <div className="current-project">
-                    <p>No project currently being researched!</p>
+                    {currentProject()}
                 </div>
             </article>
         </section>
