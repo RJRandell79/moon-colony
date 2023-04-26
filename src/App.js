@@ -7,6 +7,7 @@ import Home from './Home';
 import Power from './departments/Power';
 import Refinery from './departments/Refinery';
 import Support from './departments/Support';
+import Research from './departments/Research';
 
 //source ~/.nvm/nvm.sh
 
@@ -42,6 +43,34 @@ const App = () => {
     ]
   );
   const [refineryActive, setRefineryActive] = useState('0');
+
+  const [researchProjects, setResearchProjects] = useState(
+    [
+      { id: 'c0', category: 'Colonisation', projects: [
+
+      ]},
+      { id: 't0', category: 'Transportation', projects: [ 
+        { id: 't1', projectname: 'Probe', researchtime: 7, buildtime: 3, completed: true, available: true, active: false, elements: [
+          { element: 'Aluminum', amount: 1 },
+          { element: 'Titanium', amount: 3 }
+        ] },
+        { id: 't2', projectname: 'Grazer', researchtime: 14, buildtime: 5, completed: false, available: true, active: false },
+      ]},
+      { id: 'w0', category: 'Weapons', projects: [
+
+      ]},
+      { id: 'p0', category: 'Power', projects: [ 
+        { id: 'p1', projectname: 'Mk I', researchtime: 7, buildtime: 7, completed: false, available: true, active: false },
+        { id: 'p2', projectname: 'Mk II', researchtime: 14, buildtime: 14, completed: false, available: false, active: false },
+        { id: 'p3', projectname: 'Mk III', researchtime: 21, buildtime: 21, completed: false, available: false, active: false },
+        { id: 'p4', projectname: 'Mk IV', researchtime: 28, buildtime: 28, completed: false, available: false, active: false },
+        { id: 'p5', projectname: 'Mk V', researchtime: 35, buildtime: 35, completed: false, available: false, active: false }
+      ]},
+      { id: 's0', category: 'Supplemental', projects: [
+
+      ]}
+    ]
+  );
 
   const increasePopulation = () => {
     const newPopulation = (currentPopulation.population + currentPopulation.rate);
@@ -123,6 +152,9 @@ const App = () => {
                 <Link to="/refinery">Refinery</Link>
               </li>
               <li>
+                <Link to="/research">Research</Link>
+              </li>
+              <li>
                 <Link to="/support">Support</Link>
               </li>
               <li>
@@ -140,6 +172,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="power" element={<Power powerplants={powerPlants} currentPowerOutput={currentPowerOutput} currentPowerDemand={currentPowerDemand} installPower={installPower} />} />
             <Route path="refinery" element={<Refinery elements={elements} refineryActive={refineryActive} toggleRefining={toggleRefining} />} />
+            <Route path="research" element={<Research researchprojects={researchProjects} />} />
             <Route path="support" element={<Support currentPopulation={currentPopulation} />} />
           </Routes>
         </Router>
