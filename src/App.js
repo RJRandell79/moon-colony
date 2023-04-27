@@ -50,21 +50,21 @@ const App = () => {
 
       ]},
       { cid: 't0', category: 'Transportation', projects: [ 
-        { id: 't1', projectname: 'Probe', researchtime: 7, buildtime: 3, completed: true, available: true, active: false, elements: [
+        { id: 't1', projectname: 'Probe', researchtime: 7, progress: 0, buildtime: 3, completed: false, available: true, active: false, elements: [
           { element: 'Aluminum', amount: 1 },
           { element: 'Titanium', amount: 3 }
         ] },
-        { id: 't2', projectname: 'Grazer', researchtime: 14, buildtime: 5, completed: false, available: true, active: false },
+        { id: 't2', projectname: 'Grazer', researchtime: 14, progress: 0, buildtime: 5, completed: false, available: true, active: false },
       ]},
       { cid: 'w0', category: 'Weapons', projects: [
 
       ]},
       { cid: 'p0', category: 'Power', projects: [ 
-        { id: 'p1', projectname: 'Mk I', researchtime: 7, buildtime: 7, completed: false, available: true, active: false },
-        { id: 'p2', projectname: 'Mk II', researchtime: 14, buildtime: 14, completed: false, available: false, active: false },
-        { id: 'p3', projectname: 'Mk III', researchtime: 21, buildtime: 21, completed: false, available: false, active: false },
-        { id: 'p4', projectname: 'Mk IV', researchtime: 28, buildtime: 28, completed: false, available: false, active: false },
-        { id: 'p5', projectname: 'Mk V', researchtime: 35, buildtime: 35, completed: false, available: false, active: false }
+        { id: 'p1', projectname: 'Mk I', researchtime: 7, progress: 0, buildtime: 7, completed: false, available: true, active: false },
+        { id: 'p2', projectname: 'Mk II', researchtime: 14, progress: 0, buildtime: 14, completed: false, available: false, active: false },
+        { id: 'p3', projectname: 'Mk III', researchtime: 21, progress: 0, buildtime: 21, completed: false, available: false, active: false },
+        { id: 'p4', projectname: 'Mk IV', researchtime: 28, progress: 0, buildtime: 28, completed: false, available: false, active: false },
+        { id: 'p5', projectname: 'Mk V', researchtime: 35, progress: 0, buildtime: 35, completed: false, available: false, active: false }
       ]},
       { cid: 's0', category: 'Supplemental', projects: [
 
@@ -72,6 +72,7 @@ const App = () => {
     ]
   );
 
+  // https://dev.to/shareef/how-to-work-with-arrays-in-reactjs-usestate-4cmi#array-in-array
   const selectProject = (category_id, selected_id) => {
     const selectedProject = researchProjects.map((researchProject) => {
       if (researchProject.cid === category_id) { 
@@ -87,6 +88,23 @@ const App = () => {
       return { 
         ...researchProject, projects: researchProject.projects.map((project) => {
           return { ...project, active: false }
+        })
+      }
+    });
+    setResearchProjects(selectedProject);
+  }
+
+  const incrementResearch = () => {
+    const selectedProject = researchProjects.map((researchProject) => {
+      return { 
+        ...researchProject, projects: researchProject.projects.map((project) => {
+          if (project.active && project.progress === project.researchtime - 1) {
+            return { ...project, active: false, progress: project.researchtime, completed: true }
+          }
+          else if (project.active && project.progress < project.researchtime) {
+            return { ...project, active: true, progress: project.progress + 1 }
+          } 
+          return { ...project }
         })
       }
     });
@@ -140,6 +158,7 @@ const App = () => {
     setDateTime(newDate);
     mineElements();
     increasePopulation();
+    incrementResearch();
     console.log('day+');
   }
 
