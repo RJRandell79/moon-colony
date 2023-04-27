@@ -58,9 +58,12 @@ const Research = ({selectProject, researchprojects}) => {
                 <div id="projects-list" className="projects-list">
                 {researchprojects.map(({cid, projects}, index) => {
                     let active = isActive(index);
-                    return <ul key={index} className={`${active}`}>{projects.map(({id, projectname, available}) => {
+                    return <ul key={index} className={`${active}`}>{projects.map(({id, projectname, available, completed}) => {
                         let project = <li key={id}></li>;
-                        if(available) {
+                        if(completed) {
+                            project = <li key={id}><span className="completed">{projectname}</span></li>
+                        }
+                        else if(available) {
                             project = <li key={id}><button type="button" onClick={() => selectProject(cid, id)}>{projectname}</button></li>
                         }
                         return project;

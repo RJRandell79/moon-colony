@@ -54,6 +54,11 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
         }
+        > li {
+            > .completed {
+                color: #008000;
+            }
+        }
     }
 }
 .current-project {
