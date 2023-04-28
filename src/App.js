@@ -170,6 +170,8 @@ const App = () => {
   }
 
   useEffect(() => {
+    console.log('researchProjects state updated');
+    
     const interval = setInterval(
       () => setDateTime((dateTime) => {
         const newSecond = new Date(dateTime);
@@ -177,7 +179,7 @@ const App = () => {
         return newSecond;
       }), 1000);
       return () => clearInterval(interval);
-  }, []);  
+  }, [researchProjects]);  
 
   return (
     <div className="App">
