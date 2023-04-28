@@ -50,21 +50,21 @@ const App = () => {
 
       ]},
       { cid: 't0', category: 'Transportation', projects: [ 
-        { id: 't1', projectname: 'Probe', researchtime: 7, progress: 0, buildtime: 3, completed: false, available: true, active: false, elements: [
+        { id: 't1', projectname: 'Probe', researchtime: 7, progress: 0, buildtime: 3, completed: false, displayCompleted: false, available: true, active: false, elements: [
           { element: 'Aluminum', amount: 1 },
           { element: 'Titanium', amount: 3 }
         ] },
-        { id: 't2', projectname: 'Grazer', researchtime: 14, progress: 0, buildtime: 5, completed: false, available: true, active: false },
+        { id: 't2', projectname: 'Grazer', researchtime: 14, progress: 0, buildtime: 5, completed: false, displayCompleted: false, available: true, active: false },
       ]},
       { cid: 'w0', category: 'Weapons', projects: [
 
       ]},
       { cid: 'p0', category: 'Power', projects: [ 
-        { id: 'p1', projectname: 'Mk I', researchtime: 7, progress: 0, buildtime: 7, completed: false, available: true, active: false },
-        { id: 'p2', projectname: 'Mk II', researchtime: 14, progress: 0, buildtime: 14, completed: false, available: false, active: false },
-        { id: 'p3', projectname: 'Mk III', researchtime: 21, progress: 0, buildtime: 21, completed: false, available: false, active: false },
-        { id: 'p4', projectname: 'Mk IV', researchtime: 28, progress: 0, buildtime: 28, completed: false, available: false, active: false },
-        { id: 'p5', projectname: 'Mk V', researchtime: 35, progress: 0, buildtime: 35, completed: false, available: false, active: false }
+        { id: 'p1', projectname: 'Mk I', researchtime: 7, progress: 0, buildtime: 7, completed: false, displayCompleted: false, available: true, active: false },
+        { id: 'p2', projectname: 'Mk II', researchtime: 14, progress: 0, buildtime: 14, completed: false, displayCompleted: false, available: false, active: false },
+        { id: 'p3', projectname: 'Mk III', researchtime: 21, progress: 0, buildtime: 21, completed: false, displayCompleted: false, available: false, active: false },
+        { id: 'p4', projectname: 'Mk IV', researchtime: 28, progress: 0, buildtime: 28, completed: false, displayCompleted: false, available: false, active: false },
+        { id: 'p5', projectname: 'Mk V', researchtime: 35, progress: 0, buildtime: 35, completed: false, displayCompleted: false, available: false, active: false }
       ]},
       { cid: 's0', category: 'Supplemental', projects: [
 
@@ -79,15 +79,15 @@ const App = () => {
         return { 
           ...researchProject, projects: researchProject.projects.map((project) => {
             if (project.id === selected_id) {
-              return { ...project, active: true }
+              return { ...project, active: true, displayCompleted: false }
             }
-            return { ...project, active: false }
+            return { ...project, active: false, displayCompleted: false }
           })
         }
       }
       return { 
         ...researchProject, projects: researchProject.projects.map((project) => {
-          return { ...project, active: false }
+          return { ...project, active: false, displayCompleted: false }
         })
       }
     });
@@ -99,10 +99,10 @@ const App = () => {
       return { 
         ...researchProject, projects: researchProject.projects.map((project) => {
           if (project.active && project.progress === project.researchtime - 1) {
-            return { ...project, active: false, progress: project.researchtime, completed: true }
+            return { ...project, active: false, progress: project.researchtime, completed: true, displayCompleted: true }
           }
           else if (project.active && project.progress < project.researchtime) {
-            return { ...project, active: true, progress: project.progress + 1 }
+            return { ...project, active: true, progress: project.progress + 1, displayCompleted: false }
           } 
           return { ...project }
         })

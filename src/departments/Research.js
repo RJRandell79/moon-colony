@@ -9,13 +9,14 @@ const Research = ({selectProject, researchprojects}) => {
         for (var i = 0; i < researchprojects.length; i++) {
             for (var x = 0; x < researchprojects[i].projects.length; x++) {
                 let progress = Math.trunc((researchprojects[i].projects[x].progress / researchprojects[i].projects[x].researchtime) * 100);
-                if(researchprojects[i].projects[x].completed) {
+                if(researchprojects[i].projects[x].displayCompleted) {
                     project = researchprojects[i].projects[x].projectname + ' research complete';
+                    break;
                 }
                 else if(researchprojects[i].projects[x].active) {
                     project = 'Researching ' + researchprojects[i].projects[x].projectname + ', progress: ' + progress + '%';
+                    break;
                 }
-                break;
             }
         }
         return <p>{project}</p>
