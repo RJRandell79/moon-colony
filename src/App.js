@@ -8,6 +8,7 @@ import Power from './departments/Power';
 import Refinery from './departments/Refinery';
 import Support from './departments/Support';
 import Research from './departments/Research';
+import Production from './departments/Production';
 
 //source ~/.nvm/nvm.sh
 
@@ -50,7 +51,7 @@ const App = () => {
 
       ]},
       { cid: 't0', category: 'Transportation', projects: [ 
-        { id: 't1', projectname: 'Probe', researchtime: 7, progress: 0, buildtime: 3, completed: false, displayCompleted: false, available: true, active: false, elements: [
+        { id: 't1', projectname: 'Probe', researchtime: 7, progress: 0, buildtime: 3, completed: true, displayCompleted: false, available: true, active: false, elements: [
           { element: 'Aluminum', amount: 1 },
           { element: 'Titanium', amount: 3 }
         ] },
@@ -71,6 +72,13 @@ const App = () => {
       ]}
     ]
   );
+
+  const selectProduction = (category_id, selected_id) => {
+    console.log(category_id, selected_id);
+
+    // Needs to check refinery has the element amounts needed and the power requirements before setting the project to production status.
+    // Cross reference the other states, `elements`, `currentPowerDemand` and `currentPowerOutput`.
+  }
 
   // https://dev.to/shareef/how-to-work-with-arrays-in-reactjs-usestate-4cmi#array-in-array
   const selectProject = (category_id, selected_id) => {
@@ -200,6 +208,9 @@ const App = () => {
                 <Link to="/support">Support</Link>
               </li>
               <li>
+                <Link to="/production">Production</Link>
+              </li>
+              <li>
                 <button type="button" onClick={() => advanceDay()}>Advance day</button>
               </li>
               <li>
@@ -216,6 +227,7 @@ const App = () => {
             <Route path="refinery" element={<Refinery elements={elements} refineryActive={refineryActive} toggleRefining={toggleRefining} />} />
             <Route path="research" element={<Research researchprojects={researchProjects} selectProject={selectProject} />} />
             <Route path="support" element={<Support currentPopulation={currentPopulation} />} />
+            <Route path="production" element={<Production researchprojects={researchProjects} selectProduction={selectProduction}/>} />
           </Routes>
         </Router>
       </header>
